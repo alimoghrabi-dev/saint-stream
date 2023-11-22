@@ -4,6 +4,25 @@ import { connectToDatabase } from "@/database/mongo";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 
+export async function getUserById(userParams: { clerkId: string | null }) {
+  try {
+    connectToDatabase();
+
+    const { clerkId } = userParams;
+
+    const user = await User.findOne({ clerkId });
+
+    if (!user) {
+      return null;
+    }
+
+    return { user };
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
 export async function createUser(userParams: any) {
   try {
     connectToDatabase();

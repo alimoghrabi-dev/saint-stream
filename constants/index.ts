@@ -25,3 +25,26 @@ export const navLinks = [
     href: "/about",
   },
 ];
+
+export const platfroms = [
+  {
+    id: "disney",
+    image: "/icons/disney.png",
+  },
+  {
+    id: "netflix",
+    image: "/icons/netflix.png",
+  },
+  {
+    id: "pixar",
+    image: "/icons/pixar.png",
+  },
+  {
+    id: "marvel",
+    image: "/icons/marvel.png",
+  },
+  {
+    id: "star-wars",
+    image: "/icons/star-wars.png",
+  },
+];

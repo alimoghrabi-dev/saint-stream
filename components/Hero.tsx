@@ -12,6 +12,10 @@ import "swiper/css";
 const Hero = () => {
   const [movieList, setMovieList] = useState([]);
 
+  let isWindowWide = window.matchMedia("(min-width: 768px)").matches
+    ? true
+    : false;
+
   const fetchMovies = () => {
     const options = {
       method: "GET",
@@ -67,18 +71,21 @@ const Hero = () => {
                 release_date: string;
                 overview: string;
                 backdrop_path: string;
+                poster_path: string;
               },
               index
             ) => (
               <SwiperSlide key={index}>
                 <Image
-                  src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+                  src={`https://image.tmdb.org/t/p/original/${
+                    isWindowWide ? movie.backdrop_path : movie.poster_path
+                  }`}
                   alt="movie"
                   width={1900}
                   height={1900}
-                  className="h-screen w-full object-cover object-center z-40"
+                  className="h-screen w-full object-cover z-40"
                 />
-                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-25 p-2 pl-3 rounded-md mx-4">
+                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-10 p-2 pl-3 rounded-xl mx-4">
                   <h2 className="text-gray-100 font-bold text-xl sm:text-3xl text-shadow max-w-[280px] sm:max-w-xl">
                     {movie.title}
                   </h2>

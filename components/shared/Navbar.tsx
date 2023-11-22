@@ -4,10 +4,18 @@ import LinksComponents from "./LinksComponents";
 import Link from "next/link";
 import { Search } from "lucide-react";
 import { Button } from "../ui/button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, auth } from "@clerk/nextjs";
 import ListRender from "../ListRender";
+import { getUserById } from "@/lib/actions/user.actions";
+import UserComponent from "./UserComponent";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const { userId: clerkId } = auth();
+
+  const userInfo = await getUserById({
+    clerkId,
+  });
+
   return (
     <header className="absolute top-0 w-full bg-transparent z-50">
       <nav className="w-full flex items-center py-6">
@@ -39,7 +47,7 @@ const Navbar = () => {
             <Search className="text-gray-100 w-6 h-6 mr-2 cursor-pointer hidden sm:block" />
             <SignedIn>
               <ListRender />
-              <UserButton afterSignOutUrl="/" />
+              <UserComponent userInfo={userInfo} />
             </SignedIn>
             <SignedOut>
               <Link href={"/sign-up"}>

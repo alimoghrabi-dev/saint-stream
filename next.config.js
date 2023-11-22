@@ -5,7 +5,7 @@ const nextConfig = {
     serverComponentsExternalPackages: ["mongoose"],
   },
   images: {
-    domains: ["image.tmdb.org"],
+    domains: ["image.tmdb.org", "img.clerk.com"],
   },
 };
 
