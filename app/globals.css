@@ -6,6 +6,26 @@
   text-shadow: 0 2px 15px rgba(0, 0, 0, 1);
 }
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #f3f3f3;
+  /*Lightgrey*/
+  border-top: 2px solid #383636;
+  /*Black*/
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+  -webkit-animation: spinner 1s linear infinite;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

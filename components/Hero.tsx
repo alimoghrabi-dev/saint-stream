@@ -8,13 +8,17 @@ import { Button } from "./ui/button";
 import { PlayCircle } from "lucide-react";
 import "swiper/css/pagination";
 import "swiper/css";
+import { addMovieToDb } from "@/lib/actions/movie.actions";
 
 const Hero = () => {
   const [movieList, setMovieList] = useState([]);
+  const [isMovieSaved, setIsMovieSaved] = useState(false);
 
-  let isWindowWide = window.matchMedia("(min-width: 768px)").matches
-    ? true
-    : false;
+  let isWindowWide =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 768px)").matches
+      ? true
+      : false;
 
   const fetchMovies = () => {
     const options = {
@@ -67,11 +71,14 @@ const Hero = () => {
           {movieList.slice(5, 10).map(
             (
               movie: {
+                id: number;
                 title: string;
                 release_date: string;
                 overview: string;
                 backdrop_path: string;
                 poster_path: string;
+                vote_average: number;
+                vote_count: number;
               },
               index
             ) => (
@@ -83,9 +90,9 @@ const Hero = () => {
                   alt="movie"
                   width={1900}
                   height={1900}
-                  className="h-screen w-full object-cover z-40"
+                  className="h-[100vh] w-full object-cover z-40"
                 />
-                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-10 p-2 pl-3 rounded-xl mx-4">
+                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-25 p-2 pl-3 rounded-xl mx-4">
                   <h2 className="text-gray-100 font-bold text-xl sm:text-3xl text-shadow max-w-[280px] sm:max-w-xl">
                     {movie.title}
                   </h2>
@@ -101,6 +108,19 @@ const Hero = () => {
                       Watch Trailer
                     </Button>
                     <Button
+                      onClick={async () => {
+                        setIsMovieSaved((prev) => !prev);
+                        await addMovieToDb({
+                          id: movie.id,
+                          movieName: movie.title,
+                          release_date: movie.release_date,
+                          overview: movie.overview,
+                          backdrop_path: movie.backdrop_path,
+                          poster_path: movie.poster_path,
+                          rate: movie.vote_average,
+                          voteCount: movie.vote_count,
+                        });
+                      }}
                       variant={"ghost"}
                       className="border border-white text-white hover:bg-white/10 hover:text-white gap-2">
                       <svg
@@ -108,7 +128,7 @@ const Hero = () => {
                         width="12"
                         height="16"
                         viewBox="0 0 16 20"
-                        fill="none">
+                        fill={`none`}>
                         <path
                           d="M1 3C1 1.89543 1.89543 1 3 1H13C14.1046 1 15 1.89543 15 3V19L8 15.5L1 19V3Z"
                           stroke="white"

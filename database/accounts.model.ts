@@ -1,6 +1,6 @@
 import { Schema, models, model, Document } from "mongoose";
 
-export interface IUser extends Document {
+export interface IAccount extends Document {
   clerkId: string;
   name: string;
   username: string;
@@ -8,18 +8,19 @@ export interface IUser extends Document {
   password?: string;
   bio?: string;
   picture: string;
-  saved: Schema.Types.ObjectId[];
+  watchList: Schema.Types.ObjectId[];
+  following: Schema.Types.ObjectId[];
+  followers: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
 
-const userSchema = new Schema({
+const accountSchema = new Schema({
   clerkId: {
     type: String,
     required: true,
   },
   name: {
     type: String,
-    required: true,
   },
   username: {
     type: String,
@@ -40,10 +41,22 @@ const userSchema = new Schema({
   picture: {
     type: String,
   },
-  saved: [
+  watchList: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Watchlist",
+      ref: "Movie",
+    },
+  ],
+  following: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Account",
+    },
+  ],
+  followers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Account",
     },
   ],
   joinedAt: {
@@ -52,6 +65,6 @@ const userSchema = new Schema({
   },
 });
 
-const User = models.User || model("User", userSchema);
+const Account = models.Account || model("Account", accountSchema);
 
-export default User;
+export default Account;

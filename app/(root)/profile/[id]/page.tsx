@@ -59,7 +59,7 @@ const Page = async ({ params }: any) => {
           </div>
           <div className="flex items-start flex-col gap-4">
             <h4 className="text-3xl font-semibold text-gray-100">
-              {userInfo?.user.name}
+              {userInfo?.user.username}
             </h4>
             <div className="w-[50%] h-px bg-gray-400 bg-opacity-25" />
             <p className="text-gray-300 font-medium text-base">

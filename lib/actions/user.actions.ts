@@ -1,7 +1,7 @@
 "use server";
 
+import Account from "@/database/accounts.model";
 import { connectToDatabase } from "@/database/mongo";
-import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 
 export async function getUserById(userParams: { clerkId: string | null }) {
@@ -10,11 +10,9 @@ export async function getUserById(userParams: { clerkId: string | null }) {
 
     const { clerkId } = userParams;
 
-    const user = await User.findOne({ clerkId });
+    const user = await Account.findOne({ clerkId });
 
-    if (!user) {
-      return null;
-    }
+    if (!user) return null;
 
     return { user };
   } catch (error) {
@@ -23,11 +21,17 @@ export async function getUserById(userParams: { clerkId: string | null }) {
   }
 }
 
-export async function createUser(userParams: any) {
+export async function createUser(userParams: {
+  clerkId: string | null;
+  name: string;
+  username: string;
+  email: string;
+  picture: string;
+}) {
   try {
     connectToDatabase();
 
-    const newUser = await User.create(userParams);
+    const newUser = await Account.create(userParams);
 
     return newUser;
   } catch (error) {
@@ -42,7 +46,7 @@ export async function updateUser(params: any) {
 
     const { clerkId, updateData, path } = params;
 
-    await User.findOneAndUpdate({ clerkId }, updateData, {
+    await Account.findOneAndUpdate({ clerkId }, updateData, {
       new: true,
     });
 
@@ -59,13 +63,13 @@ export async function deleteUser(params: { clerkId: string }) {
 
     const { clerkId } = params;
 
-    const user = await User.findOneAndDelete({ clerkId });
+    const user = await Account.findOneAndDelete({ clerkId });
 
     if (!user) {
       throw new Error("User not found");
     }
 
-    const deletedUser = await User.findByIdAndDelete(user._id);
+    const deletedUser = await Account.findByIdAndDelete(user._id);
 
     return deletedUser;
   } catch (error) {

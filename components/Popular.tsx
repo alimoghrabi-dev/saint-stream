@@ -39,7 +39,6 @@ const Popular = () => {
       .then((response) => response.json())
       .then((response) => {
         setMovieList(response.results);
-        console.log(response.results);
       })
 
       .catch((err) => console.error(err));

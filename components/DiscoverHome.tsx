@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MovieContainer from "./MovieContainer";
 import "swiper/css";
+import { addMovieToDb } from "@/lib/actions/movie.actions";
 
 const DiscoverHome = () => {
   const [movieList, setMovieList] = useState([]);
@@ -37,11 +38,9 @@ const DiscoverHome = () => {
       options
     )
       .then((response) => response.json())
-      .then((response) => {
+      .then(async (response) => {
         setMovieList(response.results);
-        console.log(response.results);
       })
-
       .catch((err) => console.error(err));
   };
 
