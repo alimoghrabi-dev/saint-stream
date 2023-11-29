@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Edit } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from "./ui/input";
@@ -123,11 +123,14 @@ const EditProfile = ({ user }: any) => {
         <Button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 py-2.5 text-[15px] font-medium rounded-lg">
+          className="px-6 py-2.5 text-[15px] font-medium rounded-l w-full">
           {isSubmitting ? (
             <div className="loading-spinner" />
           ) : (
-            "Edit Your Profile"
+            <>
+              <Edit className="w-5 h-5 mr-3" />
+              Edit Your Profile
+            </>
           )}
         </Button>
       </form>

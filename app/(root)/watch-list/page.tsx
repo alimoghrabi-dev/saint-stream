@@ -45,17 +45,17 @@ const Page = async () => {
           <>
             <div
               key={movie.id}
-              className="w-full flex-col md:flex-row px-8 md:px-12 flex items-center justify-between">
-              <div className="flex items-start gap-2 sm:gap-4 md:gap-8">
+              className="w-full gap-5 flex-col md:flex-row px-8 md:px-12 flex items-center justify-between">
+              <div className="flex items-start gap-3 sm:gap-4 md:gap-8">
                 <Image
                   src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   alt="movie"
                   width={900}
                   height={950}
-                  className="w-32 h-52 sm:w-40 sm:h-60 object-cover object-center rounded-md border-2 border-primary/50"
+                  className="w-36 h-56 sm:w-40 sm:h-60 object-cover object-center rounded-md border-2 border-primary/50"
                 />
-                <div className="flex flex-col items-start justify-center gap-4 sm:gap-8 md:gap-12 lg:gap-16 h-60 max-w-sm">
-                  <h3 className="text-2xl font-bold text-gray-100">
+                <div className="flex flex-col items-start justify-start gap-4 sm:gap-8 md:gap-12 lg:gap-16 h-60 max-w-sm">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-100 line-clamp-3">
                     {movie.title}
                   </h3>
                   <p className="text-gray-300 text-sm line-clamp-6">
@@ -63,7 +63,7 @@ const Page = async () => {
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-center justify-center gap-4">
+              <div className="w-[97%] md:w-auto flex flex-col items-center justify-center gap-4">
                 <WatchListButtons id={movie.id} />
               </div>
             </div>

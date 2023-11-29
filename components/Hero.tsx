@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { PlayCircle } from "lucide-react";
 import "swiper/css/pagination";
 import "swiper/css";
+import Link from "next/link";
 
 const Hero = () => {
   const [movieList, setMovieList] = useState([]);
@@ -102,29 +103,19 @@ const Hero = () => {
                     {movie.overview}
                   </p>
                   <div className="flex items-center justify-start gap-4 pt-4 pb-1">
-                    <Button className="gap-2 border-primary">
-                      <PlayCircle className="w-5 h-5" />
-                      Watch Trailer
-                    </Button>
-                    <Button
-                      variant={"ghost"}
-                      className="border border-white text-white hover:bg-white/10 hover:text-white gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="16"
-                        viewBox="0 0 16 20"
-                        fill={`none`}>
-                        <path
-                          d="M1 3C1 1.89543 1.89543 1 3 1H13C14.1046 1 15 1.89543 15 3V19L8 15.5L1 19V3Z"
-                          stroke="white"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                      Add To List
-                    </Button>
+                    <Link href={`/movie/${movie.id}#trailer`}>
+                      <Button className="gap-2 border-primary">
+                        <PlayCircle className="w-5 h-5" />
+                        Watch Trailer
+                      </Button>
+                    </Link>
+                    <Link href={`/movie/${movie.id}`}>
+                      <Button
+                        variant={"ghost"}
+                        className="border border-white text-white hover:bg-white/10 hover:text-white gap-2 flex items-center">
+                        See More
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </SwiperSlide>

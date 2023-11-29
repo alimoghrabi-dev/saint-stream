@@ -181,7 +181,7 @@ const SingleMovie = ({ params, movieExists }: any) => {
           <h4 className="text-gray-100 text-lg font-semibold">Story Line</h4>
           <p className="text-gray-300 font-medium text-sm">{movie.overview}</p>
         </div>
-        <div className="w-full bg-gray-800 bg-opacity-70 h-px" />
+        <div id="trailer" className="w-full bg-gray-800 bg-opacity-70 h-px" />
         {movieTrailer && (
           <div className="w-full flex flex-col items-start gap-4">
             <h4 className="text-gray-100 text-xl font-semibold">
@@ -193,7 +193,7 @@ const SingleMovie = ({ params, movieExists }: any) => {
               src={`https://www.youtube.com/embed/${movieTrailer}`}
               title="Trailer"
               allowFullScreen
-              className="rounded-xl ring-2 ring-primary/50 max-w-[80%]"
+              className="rounded-xl ring-2 ring-primary/50 max-w-full md:max-w-[80%]"
             />
           </div>
         )}

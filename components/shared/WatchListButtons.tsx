@@ -29,14 +29,14 @@ const WatchListButtons = ({ id }: buttonProps) => {
 
   return (
     <>
-      <Button onClick={handleRemoveFromList} className="w-[200px]">
+      <Button onClick={handleRemoveFromList} className="w-full md:w-[200px]">
         <Trash2Icon className="w-4 h-4 mr-2" />
         Remove from List
       </Button>
-      <Link href={`/movie/${id}`}>
+      <Link href={`/movie/${id}`} className="w-full md:w-[200px]">
         <Button
           variant={"ghost"}
-          className="w-[200px] text-white border border-white">
+          className="w-full text-white border border-white">
           Go to Movie Page
         </Button>
       </Link>
