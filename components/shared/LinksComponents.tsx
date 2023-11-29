@@ -26,7 +26,7 @@ const LinksComponents = ({ navLinks, className, NavLink }: Props) => {
             pathName === link.href
               ? `${
                   NavLink
-                    ? "text-white font-semibold"
+                    ? "text-white font-semibold border-t-2 border-primary h-[98%] flex items-center mb-0.5"
                     : "text-white font-semibold"
                 }`
               : `${

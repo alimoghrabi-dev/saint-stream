@@ -6,7 +6,7 @@ import { Search } from "lucide-react";
 import { Button } from "../ui/button";
 import { SignedIn, SignedOut, auth } from "@clerk/nextjs";
 import ListRender from "../ListRender";
-import { getUserById } from "@/lib/actions/user.actions";
+import { getUserById, getWatchlistLength } from "@/lib/actions/user.actions";
 import UserComponent from "./UserComponent";
 
 const Navbar = async () => {
@@ -16,10 +16,12 @@ const Navbar = async () => {
     clerkId,
   });
 
+  const watchListLength = await getWatchlistLength(clerkId);
+
   return (
-    <header className="absolute top-0 w-full bg-transparent z-50">
-      <nav className="w-full flex items-center py-6">
-        <div className="w-full flex items-center justify-between px-3 sm:px-8">
+    <header className="absolute top-0 w-full bg-transparent h-[80px] z-50">
+      <nav className="w-full flex items-center h-full">
+        <div className="w-full h-full flex items-center justify-between px-3 sm:px-8">
           <div className="flex items-center justify-center">
             <Link href={"/"} className="flex gap-1">
               <Image
@@ -36,7 +38,7 @@ const Navbar = async () => {
               />
             </Link>
           </div>
-          <div className="hidden lg:flex items-center justify-center gap-8">
+          <div className="hidden lg:flex items-center justify-center gap-8 h-full">
             <LinksComponents
               navLinks={navLinks}
               className={"capitalize text-[16px]"}
@@ -47,18 +49,23 @@ const Navbar = async () => {
             <Search className="text-gray-100 w-6 h-6 mr-2 cursor-pointer hidden sm:block" />
             <SignedIn>
               <ListRender />
-              <UserComponent userInfo={userInfo} />
+              <UserComponent
+                watchListLength={watchListLength}
+                userInfo={userInfo}
+              />
             </SignedIn>
             <SignedOut>
               <Link href={"/sign-up"}>
                 <Button
                   variant="ghost"
-                  className="text-gray-100 border border-gray-100">
+                  className="text-gray-100 border border-gray-100 transition duration-150">
                   Sign Up
                 </Button>
               </Link>
               <Link href={"/sign-in"}>
-                <Button className="border-primary border">Login</Button>
+                <Button className="border-primary border transition duration-150 hover:bg-primary/80 hover:border-primary/80">
+                  Login
+                </Button>
               </Link>
             </SignedOut>
           </div>

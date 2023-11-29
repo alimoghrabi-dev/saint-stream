@@ -8,7 +8,6 @@ import { Button } from "./ui/button";
 import { PlayCircle } from "lucide-react";
 import "swiper/css/pagination";
 import "swiper/css";
-import { addMovieToDb } from "@/lib/actions/movie.actions";
 
 const Hero = () => {
   const [movieList, setMovieList] = useState([]);
@@ -31,7 +30,7 @@ const Hero = () => {
     };
 
     fetch(
-      `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=2`,
+      `https://api.themoviedb.org/3/movie/popular?language=en-US&page=2`,
       options
     )
       .then((response) => response.json())
@@ -68,7 +67,7 @@ const Hero = () => {
           pagination={{ clickable: true }}
           modules={[EffectCoverflow, Pagination, Autoplay]}
           effect="coverflow">
-          {movieList.slice(5, 10).map(
+          {movieList.slice(0, 5).map(
             (
               movie: {
                 id: number;
@@ -92,7 +91,7 @@ const Hero = () => {
                   height={1900}
                   className="h-[100vh] w-full object-cover z-40"
                 />
-                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-25 p-2 pl-3 rounded-xl mx-4">
+                <div className="mb-2 absolute bottom-12 backdrop-blur-[3px] bg-black bg-opacity-25 p-2 pl-3 rounded-sm mx-4">
                   <h2 className="text-gray-100 font-bold text-xl sm:text-3xl text-shadow max-w-[280px] sm:max-w-xl">
                     {movie.title}
                   </h2>
@@ -108,19 +107,6 @@ const Hero = () => {
                       Watch Trailer
                     </Button>
                     <Button
-                      onClick={async () => {
-                        setIsMovieSaved((prev) => !prev);
-                        await addMovieToDb({
-                          id: movie.id,
-                          movieName: movie.title,
-                          release_date: movie.release_date,
-                          overview: movie.overview,
-                          backdrop_path: movie.backdrop_path,
-                          poster_path: movie.poster_path,
-                          rate: movie.vote_average,
-                          voteCount: movie.vote_count,
-                        });
-                      }}
                       variant={"ghost"}
                       className="border border-white text-white hover:bg-white/10 hover:text-white gap-2">
                       <svg

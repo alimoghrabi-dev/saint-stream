@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Circle, LogOut } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -17,9 +17,10 @@ import { useState } from "react";
 
 interface Props {
   userInfo: any;
+  watchListLength: number;
 }
 
-const UserComponent = ({ userInfo }: Props) => {
+const UserComponent = ({ watchListLength, userInfo }: Props) => {
   const { signOut } = useClerk();
   const router = useRouter();
 
@@ -49,22 +50,27 @@ const UserComponent = ({ userInfo }: Props) => {
         <ChevronDown className="text-gray-200" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-6 ml-2 rounded-md mt-1.5 bg-[#1a1a1a] border-none shadow-xl text-gray-200 px-3 pb-3 pt-1.5">
-        <DropdownMenuLabel className="text-gray-100 font-medium text-base text-center">
+        <DropdownMenuLabel className="text-gray-100 font-medium text-base text-center capitalize">
           {userInfo?.user.username}
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-white/20 w-full mx-auto" />
         <Link href={`/profile/${userInfo?.user.clerkId}`}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium text-sm mb-1 mt-2.5 hover:bg-black/30 rounded-md ">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium text-sm mb-1 transition-all mt-2.5 hover:bg-black/30 rounded-md ">
             Profile
           </DropdownMenuItem>
         </Link>
         <Link href={"/watch-list"}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium hover:bg-black/30 mb-1 rounded-md ">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-black/30 mb-1 rounded-md ">
             WatchList
+            {watchListLength > 0 && (
+              <span className="text-white text-[10px] font-bold bg-primary rounded-full px-[7px] ml-4">
+                {watchListLength}
+              </span>
+            )}
           </DropdownMenuItem>
         </Link>
         <Link href={"/profile/edit"}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium hover:bg-black/30 rounded-md mb-2.5">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-black/30 rounded-md mb-2.5">
             Settings
           </DropdownMenuItem>
         </Link>

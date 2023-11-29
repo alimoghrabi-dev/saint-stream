@@ -2,10 +2,11 @@ import { Schema, models, model, Document } from "mongoose";
 
 export interface IMovie extends Document {
   id: number;
-  movieName: string;
+  title: string;
   overview: string;
   poster_path: string;
   backdrop_path: string;
+  addedByUsers: Schema.Types.ObjectId[];
   rate: number;
   voteCount: number;
   release_date: string;
@@ -16,7 +17,7 @@ const movieSchema = new Schema({
     type: Number,
     required: true,
   },
-  movieName: {
+  title: {
     type: String,
     required: true,
   },
@@ -29,9 +30,12 @@ const movieSchema = new Schema({
   backdrop_path: {
     type: String,
   },
-  isSaved: {
-    type: String,
-  },
+  addedByUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Account",
+    },
+  ],
   rate: {
     type: Number,
   },

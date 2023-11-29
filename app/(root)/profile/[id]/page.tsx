@@ -1,3 +1,6 @@
+import MovieContainer from "@/components/MovieContainer";
+import FetchMovieListProfile from "@/components/shared/FetchMovieListProfile";
+import { getWatchlistMovies } from "@/lib/actions/movie.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { Pencil } from "lucide-react";
 import Image from "next/image";
@@ -5,6 +8,10 @@ import Link from "next/link";
 
 const Page = async ({ params }: any) => {
   const userInfo = await getUserById({
+    clerkId: params.id,
+  });
+
+  const watchlistMovies = await getWatchlistMovies({
     clerkId: params.id,
   });
 
@@ -16,7 +23,7 @@ const Page = async ({ params }: any) => {
           src={"/images/background-profile.png"}
           alt="movie"
           fill
-          className="h-[75vh] w-full object-cover object-center z-40"
+          className="h-[75vh] w-full object-cover object-right sm:object-center z-40"
         />
 
         <div className="bg-gradient-to-t h-[175px] from-black opacity-[1] z-[49] to-transparent absolute bottom-0 left-0 right-0" />
@@ -29,8 +36,8 @@ const Page = async ({ params }: any) => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row items-center gap-20 md:gap-5 pb-12 pt-8">
-        <div className="text-gray-100 flex items-start flex-col gap-8 px-12">
+      <div className="flex flex-col md:flex-row items-center gap-12 md:gap-0 pb-12 pt-8">
+        <div className="text-gray-100 flex items-start flex-col gap-8 pl-12 pr-12 md:pr-4 w-full md:w-[50%] lg:w-[40%] xl:w-[35%]">
           <div className="w-full flex items-center justify-between">
             <span className="text-gray-200 font-semibold text-lg">Profile</span>
             <Link
@@ -40,7 +47,7 @@ const Page = async ({ params }: any) => {
               Edit
             </Link>
           </div>
-          <div className="flex items-center gap-12 sm:gap-20">
+          <div className="w-full flex items-center justify-between">
             <Image
               src={userInfo?.user.picture}
               alt="user"
@@ -49,16 +56,20 @@ const Page = async ({ params }: any) => {
               className="rounded-full border-2 border-primary/30"
             />
             <span className="flex flex-col gap-5 items-center">
-              <span className="text-2xl font-semibold text-gray-100">0</span>
+              <span className="text-2xl font-semibold text-gray-100">
+                {userInfo?.user.followers.length}
+              </span>
               <p className="text-gray-300 font-medium text-sm">Followers</p>
             </span>
             <span className="flex flex-col gap-5 items-center">
-              <span className="text-2xl font-semibold text-gray-100">0</span>
+              <span className="text-2xl font-semibold text-gray-100">
+                {userInfo?.user.following.length}
+              </span>
               <p className="text-gray-300 font-medium text-sm">Following</p>
             </span>
           </div>
           <div className="flex items-start flex-col gap-4">
-            <h4 className="text-3xl font-semibold text-gray-100">
+            <h4 className="text-3xl font-semibold text-gray-100 capitalize">
               {userInfo?.user.username}
             </h4>
             <div className="w-[50%] h-px bg-gray-400 bg-opacity-25" />
@@ -67,13 +78,23 @@ const Page = async ({ params }: any) => {
             </p>
           </div>
         </div>
-        <div className="flex-1 text-white text-base font-medium text-center">
-          Your WatchList Is Empty, <br />
-          <Link
-            href={"/discover"}
-            className="text-primary text-lg font-semibold hover:text-primary/80 transition duration-150">
-            Add Some Movies.
-          </Link>
+        <div className="w-full md:w-[50%] lg:w-[60%] xl:w-[65%]">
+          {watchlistMovies?.length === 0 && (
+            <span className="text-white text-base font-medium text-center">
+              Your WatchList Is Empty, <br />
+              <Link
+                href={"/discover"}
+                className="text-primary text-lg font-semibold hover:text-primary/80 transition duration-150">
+                Add Some Movies.
+              </Link>
+            </span>
+          )}
+          <div
+            className={`grid grid-cols-1 ${
+              watchlistMovies?.length === 0 ? "hidden" : "overflow-hidden"
+            }`}>
+            <FetchMovieListProfile watchlistMovies={watchlistMovies} />
+          </div>
         </div>
       </div>
     </section>

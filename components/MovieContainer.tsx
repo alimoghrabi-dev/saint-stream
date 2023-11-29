@@ -16,10 +16,13 @@ const MovieContainer = ({ movie, rate }: Props) => {
         src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
         alt={movie.title}
         fill
-        className="rounded-lg object-contain hover:opacity-75 transition ease-in-out shadow-md shadow-primary/20"
+        className="rounded-lg object-contain hover:opacity-75 transition ease-in-out border border-primary"
       />
       <div className="absolute bottom-2 left-1 flex flex-col justify-start gap-1 z-50">
-        <h4 className="text-base font-medium text-gray-100 text-shadow">
+        <h4
+          className={`${
+            rate ? "mb-0" : "mb-4"
+          } text-base font-medium text-gray-100 text-shadow`}>
           {movie.title}
         </h4>
         {rate && (

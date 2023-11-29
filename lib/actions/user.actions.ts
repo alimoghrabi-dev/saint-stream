@@ -77,3 +77,20 @@ export async function deleteUser(params: { clerkId: string }) {
     throw error;
   }
 }
+
+export async function getWatchlistLength(clerkId: string | null) {
+  try {
+    connectToDatabase();
+
+    const user = await Account.findOne({ clerkId });
+
+    if (!user) {
+      return null;
+    }
+
+    return user.watchList.length;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
