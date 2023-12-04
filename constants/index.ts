@@ -15,9 +15,9 @@ export const navLinks = [
     href: "/movie-release",
   },
   {
-    id: "forum",
-    title: "forum",
-    href: "/forum",
+    id: "users",
+    title: "users",
+    href: "/users",
   },
   {
     id: "about",

@@ -94,3 +94,120 @@ export async function getWatchlistLength(clerkId: string | null) {
     throw error;
   }
 }
+
+export async function getAllUsers() {
+  try {
+    connectToDatabase();
+
+    const user = await Account.find({});
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function followUser(params: any) {
+  try {
+    connectToDatabase();
+
+    const { clerkId, userId, path } = params;
+
+    const userFollowed = await Account.findOne({ clerkId });
+    const userFollowing = await Account.findOne({ clerkId: userId });
+
+    await Account.findOneAndUpdate(
+      { clerkId },
+      {
+        $push: { followers: userFollowing._id },
+      }
+    );
+
+    await Account.findOneAndUpdate(
+      { clerkId: userId },
+      {
+        $push: { following: userFollowed._id },
+      }
+    );
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function UnFollowUser(params: any) {
+  try {
+    connectToDatabase();
+
+    const { clerkId, userId, path } = params;
+
+    const userFollowed = await Account.findOne({ clerkId });
+    const userFollowing = await Account.findOne({ clerkId: userId });
+
+    await Account.findOneAndUpdate(
+      { clerkId },
+      {
+        $pull: { followers: userFollowing._id },
+      }
+    );
+
+    await Account.findOneAndUpdate(
+      { clerkId: userId },
+      {
+        $pull: { following: userFollowed._id },
+      }
+    );
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getFollowingUsers(params: any) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    if (!userId) {
+      return null;
+    }
+
+    const user = await Account.findOne({ clerkId: userId });
+    const usersFollowing = await Account.find({ _id: { $in: user.following } });
+
+    return usersFollowing;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getFollowersUsers(params: any) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    if (!userId) {
+      return null;
+    }
+
+    const user = await Account.findOne({ clerkId: userId });
+    const usersFollowing = await Account.find({ _id: { $in: user.followers } });
+
+    return usersFollowing;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

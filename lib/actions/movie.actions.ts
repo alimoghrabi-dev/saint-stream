@@ -150,7 +150,7 @@ export async function getWatchlistMovies(params: { clerkId: string | null }) {
 
     const movies = await Movie.find({
       _id: { $in: user.watchList },
-    });
+    }).sort({ release_date: -1 });
 
     return movies;
   } catch (error) {

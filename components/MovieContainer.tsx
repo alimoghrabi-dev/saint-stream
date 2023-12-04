@@ -11,18 +11,18 @@ const MovieContainer = ({ movie, rate }: Props) => {
   return (
     <Link
       href={`/movie/${movie.id}`}
-      className="relative h-[240px] min-w-[160px] cursor-pointer rounded-lg">
+      className="relative min-h-[240px] min-w-[160px] cursor-pointer rounded-lg">
       <Image
         src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
         alt={movie.title}
         fill
-        className="rounded-lg object-contain hover:opacity-75 transition ease-in-out border border-primary"
+        className="w-full h-full rounded-[7px] object-cover hover:opacity-75 transition ease-in-out border border-primary/[0.15] shadow-lg shadow-primary/20"
       />
-      <div className="absolute bottom-2 left-1 flex flex-col justify-start gap-1 z-50">
+      <div className="absolute bottom-2 left-1 flex flex-col justify-start gap-1 z-50 pl-0.5">
         <h4
           className={`${
-            rate ? "mb-0" : "mb-4"
-          } text-base font-medium text-gray-100 text-shadow`}>
+            rate ? "mb-0" : "mb-1 ml-1"
+          } text-base font-semibold text-gray-100 text-shadow line-clamp-2`}>
           {movie.title}
         </h4>
         {rate && (
@@ -32,7 +32,7 @@ const MovieContainer = ({ movie, rate }: Props) => {
           </p>
         )}
       </div>
-      <div className="bg-gradient-to-t h-[120px] from-black opacity-[0.95067] z-[49] to-transparent absolute bottom-0 left-0 right-0" />
+      <div className="bg-gradient-to-t h-[95px] from-black opacity-[0.98067] z-[49] to-transparent absolute bottom-px rounded-b-[5px] left-px right-px" />
     </Link>
   );
 };

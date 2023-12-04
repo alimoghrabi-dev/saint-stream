@@ -4,7 +4,6 @@ import Hero from "@/components/Hero";
 import NowPlaying from "@/components/NowPlaying";
 import Popular from "@/components/Popular";
 import TopRated from "@/components/TopRated";
-import UpComing from "@/components/UpComing";
 
 export default function Home() {
   return (
@@ -15,11 +14,10 @@ export default function Home() {
         <FetchCategories />
       </div>
       <div className="space-y-5">
-        <UpComing />
+        <NowPlaying />
         <DiscoverHome />
         <TopRated />
         <Popular />
-        <NowPlaying />
       </div>
     </main>
   );

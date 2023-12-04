@@ -11,13 +11,14 @@ const Page = async () => {
 
   return (
     <section>
-      <div className="relative h-[75vh] w-full">
+      <div className="relative h-[82vh] w-full">
         <div className="bg-gradient-to-b h-[160px] from-black opacity-[0.90067] z-[49] to-transparent absolute top-0 left-0 right-0" />
         <Image
           src={"/images/watchlist.png"}
           alt="watchlist"
-          fill
-          className="h-[75vh] w-full object-cover object-right sm:object-center z-40"
+          width={1500}
+          height={1500}
+          className="h-[82vh] w-full object-cover object-right sm:object-center z-40"
         />
 
         <div className="bg-gradient-to-t h-[175px] from-black opacity-[1] z-[49] to-transparent absolute bottom-0 left-0 right-0" />
@@ -52,7 +53,7 @@ const Page = async () => {
                   alt="movie"
                   width={900}
                   height={950}
-                  className="w-36 h-56 sm:w-40 sm:h-60 object-cover object-center rounded-md border-2 border-primary/50"
+                  className="w-36 h-56 sm:w-40 sm:h-60 object-cover object-center rounded-md shadow-md shadow-primary/25"
                 />
                 <div className="flex flex-col items-start justify-start gap-4 sm:gap-8 md:gap-12 lg:gap-16 h-60 max-w-sm">
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-100 line-clamp-3">

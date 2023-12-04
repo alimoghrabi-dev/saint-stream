@@ -6,6 +6,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.shadow-custom {
+  box-shadow: 0 0 12px rgba(84, 161, 12, 0.5);
+}
+
+.shadow-custom-2 {
+  box-shadow: -2px 2px 13px rgba(99, 194, 11, 0.13);
+}
+
 .text-shadow {
   text-shadow: 0 2px 15px rgba(0, 0, 0, 1);
 }

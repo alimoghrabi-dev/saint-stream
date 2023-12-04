@@ -12,7 +12,6 @@ import Link from "next/link";
 
 const Hero = () => {
   const [movieList, setMovieList] = useState([]);
-  const [isMovieSaved, setIsMovieSaved] = useState(false);
 
   let isWindowWide =
     typeof window !== "undefined" &&

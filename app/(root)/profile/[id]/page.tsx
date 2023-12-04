@@ -1,18 +1,43 @@
-import MovieContainer from "@/components/MovieContainer";
+import FollowUnfollow from "@/components/FollowUnfollow";
 import FetchMovieListProfile from "@/components/shared/FetchMovieListProfile";
+import Followers from "@/components/shared/Followers";
+import Following from "@/components/shared/Following";
 import { getWatchlistMovies } from "@/lib/actions/movie.actions";
-import { getUserById } from "@/lib/actions/user.actions";
+import {
+  getFollowersUsers,
+  getFollowingUsers,
+  getUserById,
+} from "@/lib/actions/user.actions";
+import { auth } from "@clerk/nextjs";
 import { Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Page = async ({ params }: any) => {
+  const { userId } = auth();
+
   const userInfo = await getUserById({
     clerkId: params.id,
   });
 
+  const visitorInfo = await getUserById({
+    clerkId: userId,
+  });
+
   const watchlistMovies = await getWatchlistMovies({
     clerkId: params.id,
+  });
+
+  let isUserAlreadyFollowed = visitorInfo?.user.following.includes(
+    userInfo?.user._id
+  );
+
+  const getFollowingUsersVar = await getFollowingUsers({
+    userId: params.id,
+  });
+
+  const getFollowersUsersVar = await getFollowersUsers({
+    userId: params.id,
   });
 
   return (
@@ -40,13 +65,22 @@ const Page = async ({ params }: any) => {
         <div className="text-gray-100 flex items-start flex-col gap-8 pl-12 pr-12 md:pr-4 w-full md:w-[50%] lg:w-[40%] xl:w-[35%]">
           <div className="w-full flex items-center justify-between">
             <span className="text-gray-200 font-semibold text-lg">Profile</span>
-            <Link
-              href={"/profile/edit"}
-              className="text-primary text-lg font-semibold flex gap-1 items-center hover:text-primary/80 transition duration-150">
-              <Pencil className="w-[18px] h-[18px]" />
-              Edit
-            </Link>
+            {params.id === userId ? (
+              <Link
+                href={"/profile/edit"}
+                className="text-primary text-lg font-semibold flex gap-1 items-center hover:text-primary/80 transition duration-150">
+                <Pencil className="w-[18px] h-[18px]" />
+                Edit
+              </Link>
+            ) : (
+              <FollowUnfollow
+                paramsId={params.id}
+                userId={userId}
+                isUserAlreadyFollowed={isUserAlreadyFollowed}
+              />
+            )}
           </div>
+
           <div className="w-full flex items-center justify-between">
             <Image
               src={userInfo?.user.picture}
@@ -59,15 +93,16 @@ const Page = async ({ params }: any) => {
               <span className="text-2xl font-semibold text-gray-100">
                 {userInfo?.user.followers.length}
               </span>
-              <p className="text-gray-300 font-medium text-sm">Followers</p>
+              <Followers followers={getFollowersUsersVar} />
             </span>
             <span className="flex flex-col gap-5 items-center">
               <span className="text-2xl font-semibold text-gray-100">
                 {userInfo?.user.following.length}
               </span>
-              <p className="text-gray-300 font-medium text-sm">Following</p>
+              <Following following={getFollowingUsersVar} />
             </span>
           </div>
+
           <div className="flex items-start flex-col gap-4">
             <h4 className="text-3xl font-semibold text-gray-100 capitalize">
               {userInfo?.user.username}
