@@ -1,10 +1,11 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowBigRight, ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import MovieContainer from "./MovieContainer";
+import MovieContainerOfTheWeek from "../MovieContainerOfTheWeek";
 
-const UpComing = () => {
+const PopularOfTheWeek = () => {
   const [movieList, setMovieList] = useState([]);
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +32,7 @@ const UpComing = () => {
     };
 
     fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=2`,
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
       options
     )
       .then((response) => response.json())
@@ -47,29 +48,33 @@ const UpComing = () => {
   });
 
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 py-12 pt-24 lg:pt-8 lg:py-2">
       <div className="w-full flex items-center justify-between px-10 pt-1 pb-2">
-        <h3 className="text-white font-semibold text-2xl">Up Coming</h3>
+        <h3 className="text-white font-semibold text-2xl">
+          Popular of the week
+        </h3>
+        <span className="flex items-center gap-3">
+          <ArrowLeft
+            onClick={() => handleClick("left")}
+            className="text-gray-100 transition z-[60] h-8 w-8 p-1.5 bg-gray-600 hover:bg-gray-600/90 rounded-full cursor-pointer"
+          />
+          <ArrowRight
+            onClick={() => handleClick("right")}
+            className="text-gray-100 transition z-[60] h-8 w-8 p-1.5 bg-gray-600 rounded-full hover:bg-gray-600/90 cursor-pointer"
+          />
+        </span>
       </div>
-      <div className="group relative">
-        <ArrowRight
-          onClick={() => handleClick("right")}
-          className="absolute text-gray-100 top-[39%] opacity-0 transition z-[60] right-12 m-auto h-8 w-8 p-1.5 bg-primary rounded-full hover:bg-primary/90 cursor-pointer group-hover:opacity-100"
-        />
+      <div className="relative">
         <div
-          className="flex items-center scrollbar-hide overflow-x-scroll pl-10 gap-x-6 pb-8 pt-2 pr-4"
+          className="flex items-center scrollbar-hide overflow-x-scroll pl-10 gap-x-12 pb-8 pt-2 pr-4"
           ref={rowRef}>
-          {movieList.map((movie: any) => (
-            <MovieContainer key={movie.id} movie={movie} />
+          {movieList.map((movie: any, index) => (
+            <MovieContainerOfTheWeek key={index} movie={movie} index={index} />
           ))}
         </div>
-        <ArrowLeft
-          onClick={() => handleClick("left")}
-          className="absolute text-gray-100 top-[39%] opacity-0 transition z-[60] left-12 m-auto h-8 w-8 p-1.5 bg-primary hover:bg-primary/90 rounded-full cursor-pointer group-hover:opacity-100"
-        />
       </div>
     </div>
   );
 };
 
-export default UpComing;
+export default PopularOfTheWeek;

@@ -1,8 +1,19 @@
 import DiscoverHero from "@/components/DiscoverHero";
 import FetchCategories from "@/components/FetchCategories";
+import FriendChoice from "@/components/FriendChoice";
 import UpComing from "@/components/UpComing";
+import Featured from "@/components/shared/Featured";
+import PopularOfTheWeek from "@/components/shared/PopularOfTheWeek";
+import { getUserById } from "@/lib/actions/user.actions";
+import { auth } from "@clerk/nextjs";
 
-const Page = () => {
+const Page = async () => {
+  const { userId: clerkId } = auth();
+
+  const userInfo = await getUserById({
+    clerkId,
+  });
+
   return (
     <section className="relative pb-5">
       <div className="bg-gradient-to-b h-[160px] from-black opacity-[0.90067] z-[49] to-transparent absolute top-0 left-0 right-0" />
@@ -11,7 +22,10 @@ const Page = () => {
         <FetchCategories />
       </div>
       <div className="space-y-5">
+        {userInfo?.user?.following.length === 0 ? null : <FriendChoice />}
         <UpComing />
+        <Featured />
+        <PopularOfTheWeek />
       </div>
     </section>
   );

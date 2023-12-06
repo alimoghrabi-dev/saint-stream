@@ -16,7 +16,7 @@ import Link from "next/link";
 const Following = ({ following }: any) => {
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="text-gray-300 font-medium text-sm">
+      <AlertDialogTrigger className="text-gray-300 font-medium text-sm hover:text-primary/70 transition-all">
         Following
       </AlertDialogTrigger>
       <AlertDialogContent className="bg-[#141414] border-none shadow-custom-2">

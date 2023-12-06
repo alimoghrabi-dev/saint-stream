@@ -201,3 +201,38 @@ export async function removeMovieFromList(params: {
     throw error;
   }
 }
+
+export async function getFollowingWatchlist(params: any) {
+  try {
+    connectToDatabase();
+
+    const { userId } = params;
+
+    const user = await Account.findOne({
+      clerkId: userId,
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    let movies: any[] = [];
+
+    const friends = await Account.find({
+      _id: { $in: user.following },
+    });
+
+    await Promise.all(
+      friends.map(async (friend) => {
+        movies = await Movie.find({
+          _id: { $in: friend.watchList },
+        });
+      })
+    );
+
+    return movies;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
