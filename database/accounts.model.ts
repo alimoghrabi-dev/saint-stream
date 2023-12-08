@@ -11,6 +11,7 @@ export interface IAccount extends Document {
   watchList: Schema.Types.ObjectId[];
   following: Schema.Types.ObjectId[];
   followers: Schema.Types.ObjectId[];
+  comments: Schema.Types.ObjectId[];
   joinedAt: Date;
 }
 
@@ -57,6 +58,12 @@ const accountSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Account",
+    },
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
     },
   ],
   joinedAt: {

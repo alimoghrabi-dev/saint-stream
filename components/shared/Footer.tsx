@@ -1,8 +1,13 @@
+"use client";
+
 import { navLinks } from "@/constants";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Footer = () => {
+  const pathname = usePathname();
+
   return (
     <footer className="w-full bg-black">
       <div className="w-full flex flex-col lg:flex-row items-center justify-between px-5 gap-24 lg:gap-0 md:px-8 lg:px-12 py-12 border-t border-gray-700/50">
@@ -32,7 +37,11 @@ const Footer = () => {
                 <Link
                   key={index}
                   href={link.href}
-                  className="text-gray-300 font-medium text-base sm:text-lg capitalize">
+                  className={`${
+                    link.href === pathname
+                      ? "text-primary font-semibold"
+                      : "text-gray-300"
+                  } font-medium text-base sm:text-lg capitalize`}>
                   {link.title === "movie release" ? "release" : link.title}
                 </Link>
                 {navLinks.length - 1 !== index && (

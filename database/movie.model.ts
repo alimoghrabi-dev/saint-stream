@@ -7,6 +7,7 @@ export interface IMovie extends Document {
   poster_path: string;
   backdrop_path: string;
   addedByUsers: Schema.Types.ObjectId[];
+  comments: Schema.Types.ObjectId[];
   rate: number;
   voteCount: number;
   release_date: string;
@@ -34,6 +35,12 @@ const movieSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Account",
+    },
+  ],
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
     },
   ],
   rate: {
