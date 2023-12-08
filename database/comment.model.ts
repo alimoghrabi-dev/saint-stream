@@ -1,12 +1,13 @@
 import { Schema, models, model, Document } from "mongoose";
+import { IAccount } from "./accounts.model";
 
-export interface IAccount extends Document {
+export interface IComment extends Document {
   user: IAccount;
   prompt: string;
   createdAt: Date;
 }
 
-const accountSchema = new Schema({
+const commentSchema = new Schema({
   user: {
     type: Object,
     required: true,
@@ -22,6 +23,6 @@ const accountSchema = new Schema({
   },
 });
 
-const Account = models.Account || model("Account", accountSchema);
+const Comment = models.Comment || model("Comment", commentSchema);
 
-export default Account;
+export default Comment;
