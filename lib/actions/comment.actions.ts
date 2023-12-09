@@ -21,6 +21,8 @@ export async function createComment(params: {
 
     const movieDB = await Movie.findOne({ id: movie.id });
 
+    console.log(user.username);
+
     const newComment = await Comment.create({
       user,
       username: user.username,

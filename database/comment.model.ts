@@ -30,11 +30,9 @@ const commentSchema = new Schema({
   },
   movieTitle: {
     type: String,
-    required: true,
   },
   moviePicture: {
     type: String,
-    required: true,
   },
   prompt: {
     type: String,
