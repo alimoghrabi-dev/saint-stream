@@ -8,8 +8,9 @@ import MovieContainer from "@/components/MovieContainer";
 import { addMovieToDb, removeMovieFromList } from "@/lib/actions/movie.actions";
 import { useAuth } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import CommentsSection from "./CommentsSection";
 
-const SingleMovie = ({ params, movieExists }: any) => {
+const SingleMovie = ({ params, movieExists, userIdFromServer }: any) => {
   const { userId } = useAuth();
 
   const pathname = usePathname();
@@ -220,6 +221,13 @@ const SingleMovie = ({ params, movieExists }: any) => {
             />
             <div className="bg-gradient-to-l w-[60px] h-[200px] from-black opacity-[0.95067] z-[49] to-transparent absolute top-0 bottom-0 right-0" />
           </div>
+        </div>
+        <div className="w-full xl:w-[75%] flex flex-col space-y-8">
+          <h4 className="text-gray-100 text-lg sm:text-xl font-semibold flex gap-2">
+            <p> What People Say About</p>
+            <p className="text-primary">{movie.title}</p>
+          </h4>
+          <CommentsSection movieId={movie.id} userId={userIdFromServer} />
         </div>
       </div>
     </div>

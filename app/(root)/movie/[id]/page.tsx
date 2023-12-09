@@ -12,7 +12,7 @@ const Page = async ({ params }: any) => {
 
   return (
     <div className="bg-black">
-      <SingleMovie params={params} movieExists={movieExists} />
+      <SingleMovie params={params} movieExists={movieExists} userId={userId} />
     </div>
   );
 };
