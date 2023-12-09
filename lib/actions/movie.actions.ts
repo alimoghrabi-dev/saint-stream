@@ -236,3 +236,20 @@ export async function getFollowingWatchlist(params: any) {
     throw error;
   }
 }
+
+export async function getMovieById(params: { movieId: number }) {
+  try {
+    connectToDatabase();
+
+    const { movieId } = params;
+
+    const movie = await Movie.findOne({
+      id: movieId,
+    });
+
+    return movie;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}

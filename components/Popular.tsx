@@ -5,8 +5,11 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MovieContainer from "./MovieContainer";
 import "swiper/css";
+import { useRouter } from "next/navigation";
 
 const Popular = () => {
+  const router = useRouter();
+
   const [movieList, setMovieList] = useState([]);
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +49,7 @@ const Popular = () => {
 
   useEffect(() => {
     fetchMovies();
-  });
+  }, [router]);
 
   return (
     <div className="space-y-1">

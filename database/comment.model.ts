@@ -1,24 +1,40 @@
 import { Schema, models, model, Document } from "mongoose";
-import { IAccount } from "./accounts.model";
-import { IMovie } from "./movie.model";
 
 export interface IComment extends Document {
-  user: IAccount;
-  movie: IMovie;
+  user: Schema.Types.ObjectId;
+  movie: Schema.Types.ObjectId;
+  username: string;
+  userPicture: string;
+  movieTitle: string;
+  moviePicture: string;
   prompt: string;
   createdAt: Date;
 }
 
 const commentSchema = new Schema({
   user: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
     ref: "Account",
   },
   movie: {
-    type: Object,
-    required: true,
+    type: Schema.Types.ObjectId,
     ref: "Movie",
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  userPicture: {
+    type: String,
+    required: true,
+  },
+  movieTitle: {
+    type: String,
+    required: true,
+  },
+  moviePicture: {
+    type: String,
+    required: true,
   },
   prompt: {
     type: String,

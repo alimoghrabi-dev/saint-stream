@@ -3,8 +3,10 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import MovieContainer from "./MovieContainer";
+import { useRouter } from "next/navigation";
 
 const UpComing = () => {
+  const router = useRouter();
   const [movieList, setMovieList] = useState([]);
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +46,7 @@ const UpComing = () => {
 
   useEffect(() => {
     fetchMovies();
-  });
+  }, [router]);
 
   return (
     <div className="space-y-1">

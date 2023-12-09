@@ -9,8 +9,11 @@ import { PlayCircle } from "lucide-react";
 import "swiper/css/pagination";
 import "swiper/css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
+
   const [movieList, setMovieList] = useState([]);
 
   let isWindowWide =
@@ -42,7 +45,7 @@ const Hero = () => {
 
   useEffect(() => {
     fetchMovies();
-  });
+  }, [router]);
 
   return (
     <div className="bg-black">

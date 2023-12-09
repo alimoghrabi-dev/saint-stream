@@ -1,11 +1,12 @@
 "use client";
 
-import { ArrowBigRight, ArrowLeft, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import MovieContainerOfTheWeek from "../MovieContainerOfTheWeek";
+import { useRouter } from "next/navigation";
 
 const PopularOfTheWeek = () => {
+  const router = useRouter();
   const [movieList, setMovieList] = useState([]);
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +46,7 @@ const PopularOfTheWeek = () => {
 
   useEffect(() => {
     fetchMovies();
-  });
+  }, [router]);
 
   return (
     <div className="space-y-1 py-12 pt-24 lg:pt-8 lg:py-2">

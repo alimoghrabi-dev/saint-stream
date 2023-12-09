@@ -2,7 +2,8 @@
 
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 interface IMovie {
   title: string;
@@ -13,6 +14,7 @@ interface IMovie {
 }
 
 const Featured = () => {
+  const router = useRouter();
   const [movies, setMovie] = useState([]);
   const [background, setBackground] = useState<IMovie>({
     title: "",
@@ -40,10 +42,9 @@ const Featured = () => {
       rowRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
     }
   };
+  const fetchMovies = () => {
+    const options = { method: "GET", headers: { accept: "application/json" } };
 
-  const options = { method: "GET", headers: { accept: "application/json" } };
-
-  window.onload = () => {
     fetch(
       `https://api.themoviedb.org/3/trending/movie/day?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
       options
@@ -55,6 +56,10 @@ const Featured = () => {
       })
       .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    fetchMovies();
+  }, [router]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 pl-12 py-24 relative space-y-10 lg:space-y-0">

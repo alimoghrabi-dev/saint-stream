@@ -7,10 +7,17 @@ import { Share2Icon, ArrowLeft, ArrowRight } from "lucide-react";
 import MovieContainer from "@/components/MovieContainer";
 import { addMovieToDb, removeMovieFromList } from "@/lib/actions/movie.actions";
 import { useAuth } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import CommentsSection from "./CommentsSection";
 
-const SingleMovie = ({ params, movieExists, userIdFromServer }: any) => {
+const SingleMovie = ({
+  params,
+  movieExists,
+  mongoUser,
+  movieFromDB,
+  movieComments,
+}: any) => {
+  const router = useRouter();
   const { userId } = useAuth();
 
   const pathname = usePathname();
@@ -48,27 +55,27 @@ const SingleMovie = ({ params, movieExists, userIdFromServer }: any) => {
       ? true
       : false;
 
-  const options = { method: "GET", headers: { accept: "application/json" } };
-
-  fetch(
-    `https://api.themoviedb.org/3/movie/${params.id}?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      setMovie(response);
-    })
-    .catch((err) => console.error(err));
-
-  fetch(
-    `https://api.themoviedb.org/3/movie/${params.id}/similar?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => setMovieSimilar(response.results))
-    .catch((err) => console.error(err));
-
   useEffect(() => {
+    const options = { method: "GET", headers: { accept: "application/json" } };
+
+    fetch(
+      `https://api.themoviedb.org/3/movie/${params.id}?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        setMovie(response);
+      })
+      .catch((err) => console.error(err));
+
+    fetch(
+      `https://api.themoviedb.org/3/movie/${params.id}/similar?api_key=ccd77ac96966ef74d91b236242757808&language=en-US`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => setMovieSimilar(response.results))
+      .catch((err) => console.error(err));
+
     const fetchTrailer = async () => {
       const videosUrl = `https://api.themoviedb.org/3/movie/${params.id}/videos?api_key=ccd77ac96966ef74d91b236242757808`;
       const videosResponse = await fetch(videosUrl);
@@ -83,7 +90,7 @@ const SingleMovie = ({ params, movieExists, userIdFromServer }: any) => {
     };
 
     fetchTrailer();
-  });
+  }, [params.id, router]);
 
   const handleAddToList = async () => {
     try {
@@ -227,7 +234,12 @@ const SingleMovie = ({ params, movieExists, userIdFromServer }: any) => {
             <p> What People Say About</p>
             <p className="text-primary">{movie.title}</p>
           </h4>
-          <CommentsSection movieId={movie.id} userId={userIdFromServer} />
+          <CommentsSection
+            movie={movie}
+            mongoUser={mongoUser}
+            movieFromDB={movieFromDB}
+            movieComments={movieComments}
+          />
         </div>
       </div>
     </div>

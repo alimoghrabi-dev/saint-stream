@@ -5,8 +5,11 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MovieContainer from "./MovieContainer";
 import "swiper/css";
+import { useRouter } from "next/navigation";
 
 const TopRated = () => {
+  const router = useRouter();
+
   const [movieList, setMovieList] = useState([]);
   const rowRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +49,7 @@ const TopRated = () => {
 
   useEffect(() => {
     fetchMovies();
-  });
-
+  }, [router]);
   return (
     <div className="space-y-1">
       <div className="w-full flex items-center justify-between px-10 pt-1 pb-2">
