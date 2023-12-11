@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, LogOut, Settings, User2 } from "lucide-react";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -55,22 +55,22 @@ const UserComponent = ({ watchListLength, userInfo }: Props) => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-white/20 w-full mx-auto" />
         <Link href={`/profile/${userInfo?.user.clerkId}`}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium text-sm mb-1 transition-all mt-2.5 hover:bg-black/30 rounded-md ">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium text-sm mb-1 transition-all mt-2.5 hover:bg-gray-600/30 rounded-md flex items-center justify-center gap-1.5">
+            <User2 className="w-[18px] h-[18px] text-gray-300" />
             Profile
           </DropdownMenuItem>
         </Link>
         <Link href={"/watch-list"}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-black/30 mb-1 rounded-md ">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-gray-600/30 mb-1 rounded-md flex items-center justify-center gap-1.5">
+            <span className="text-white text-[10px] font-semibold bg-primary/70 rounded-full px-[7px]">
+              {watchListLength}
+            </span>
             WatchList
-            {watchListLength > 0 && (
-              <span className="text-white text-[10px] font-bold bg-primary rounded-full px-[7px] ml-4">
-                {watchListLength}
-              </span>
-            )}
           </DropdownMenuItem>
         </Link>
         <Link href={"/profile/edit"}>
-          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-black/30 rounded-md mb-2.5">
+          <DropdownMenuItem className="cursor-pointer text-gray-300 font-medium transition-all hover:bg-gray-600/30 rounded-md mb-2.5 flex items-center justify-center gap-1.5">
+            <Settings className="w-[18px] h-[18px] text-gray-300" />
             Settings
           </DropdownMenuItem>
         </Link>

@@ -1,6 +1,6 @@
 import SingleMovie from "@/components/shared/singleMovie";
 import { getComments } from "@/lib/actions/comment.actions";
-import { checkExist, getMovieById } from "@/lib/actions/movie.actions";
+import { checkExist } from "@/lib/actions/movie.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs";
 
@@ -14,10 +14,6 @@ const Page = async ({ params }: any) => {
     userId: userId,
   });
 
-  const movieFromDB = await getMovieById({
-    movieId: params.id,
-  });
-
   const movieComments = await getComments({
     movieId: params.id,
   });
@@ -28,7 +24,6 @@ const Page = async ({ params }: any) => {
         params={params}
         movieExists={movieExists}
         mongoUser={mongoUser?.user}
-        movieFromDB={movieFromDB}
         movieComments={movieComments}
       />
     </div>

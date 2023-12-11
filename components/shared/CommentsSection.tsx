@@ -5,15 +5,9 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { createComment } from "@/lib/actions/comment.actions";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import FetchComment from "./FetchComment";
 
-const CommentsSection = ({
-  movie,
-  mongoUser,
-  movieFromDB,
-  movieComments,
-}: any) => {
+const CommentsSection = ({ movie, mongoUser, movieComments }: any) => {
   const pathname = usePathname();
 
   const [comment, setComment] = useState({
@@ -57,22 +51,30 @@ const CommentsSection = ({
           onChange={handlePromptChange}
           value={comment.prompt}
           placeholder="Add a comment"
-          className="bg-black/90 text-gray-200 font-medium border-2 border-gray-400/70 transition-all"
+          className="bg-black/90 text-gray-200 placeholder:text-sm placeholder:font-semibold font-medium border-2 border-gray-400/70 transition-all"
         />
         <Button disabled={submitting} type="submit" className="w-[100px]">
           {submitting ? <div className="loading-spinner" /> : "Comment"}
         </Button>
       </form>
 
-      {movieFromDB?.comments?.length === 0 && (
+      {movieComments?.length === 0 && (
         <p className="text-xl font-medium text-gray-500 py-3.5 text-center">
           Comment Section Is Empty!
         </p>
       )}
-
-      {movieComments.map((comment: any) => {
-        return <FetchComment key={comment._id} comment={comment} />;
-      })}
+      <div className="flex flex-col gap-6">
+        {movieComments.map((comment: any, index: number) => {
+          return (
+            <FetchComment
+              key={index}
+              comment={comment}
+              index={index}
+              movieComments={movieComments}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };

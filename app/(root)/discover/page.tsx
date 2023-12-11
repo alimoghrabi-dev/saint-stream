@@ -1,6 +1,7 @@
 import DiscoverHero from "@/components/DiscoverHero";
 import FetchCategories from "@/components/FetchCategories";
 import FriendChoice from "@/components/FriendChoice";
+import PopularDiscussions from "@/components/PopularDiscussions";
 import UpComing from "@/components/UpComing";
 import Featured from "@/components/shared/Featured";
 import PopularOfTheWeek from "@/components/shared/PopularOfTheWeek";
@@ -26,6 +27,7 @@ const Page = async () => {
         <UpComing />
         <Featured />
         <PopularOfTheWeek />
+        <PopularDiscussions />
       </div>
     </section>
   );

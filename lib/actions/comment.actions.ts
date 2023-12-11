@@ -21,8 +21,6 @@ export async function createComment(params: {
 
     const movieDB = await Movie.findOne({ id: movie.id });
 
-    console.log(user.username);
-
     const newComment = await Comment.create({
       user,
       username: user.username,
@@ -50,9 +48,9 @@ export async function createComment(params: {
       );
 
       await Comment.findByIdAndUpdate(newComment._id, {
-        $push: {
-          movie: movieDB,
-        },
+        movie: movieDB,
+        movieTitle: movie.title,
+        moviePicture: movie.poster_path,
       });
     } else {
       const movieDBInfo = await Movie.create({
@@ -68,9 +66,9 @@ export async function createComment(params: {
       });
 
       await Comment.findByIdAndUpdate(newComment._id, {
-        $push: {
-          movie: movieDBInfo,
-        },
+        movie: movieDBInfo,
+        movieTitle: movie.title,
+        moviePicture: movie.poster_path,
       });
     }
 
@@ -94,6 +92,19 @@ export async function getComments(params: any) {
         $in: movieComments?.comments,
       },
     });
+
+    return comments;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function getAllPopularComments() {
+  try {
+    connectToDatabase();
+
+    const comments = await Comment.find({});
 
     return comments;
   } catch (error) {

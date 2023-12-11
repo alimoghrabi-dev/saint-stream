@@ -115,7 +115,7 @@ const Page = async ({ params }: any) => {
         </div>
         <div className="w-full md:w-[50%] lg:w-[60%] xl:w-[65%]">
           {watchlistMovies?.length === 0 && (
-            <span className="text-white text-base font-medium text-center">
+            <span className="text-white text-base font-medium w-full flex flex-col items-center justify-center">
               Your WatchList Is Empty, <br />
               <Link
                 href={"/discover"}

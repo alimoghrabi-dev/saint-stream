@@ -14,7 +14,6 @@ const SingleMovie = ({
   params,
   movieExists,
   mongoUser,
-  movieFromDB,
   movieComments,
 }: any) => {
   const router = useRouter();
@@ -229,7 +228,7 @@ const SingleMovie = ({
             <div className="bg-gradient-to-l w-[60px] h-[200px] from-black opacity-[0.95067] z-[49] to-transparent absolute top-0 bottom-0 right-0" />
           </div>
         </div>
-        <div className="w-full xl:w-[75%] flex flex-col space-y-8">
+        <div className="w-full xl:w-[75%] flex flex-col space-y-8 pb-1 mt-8">
           <h4 className="text-gray-100 text-lg sm:text-xl font-semibold flex gap-2">
             <p> What People Say About</p>
             <p className="text-primary">{movie.title}</p>
@@ -237,7 +236,6 @@ const SingleMovie = ({
           <CommentsSection
             movie={movie}
             mongoUser={mongoUser}
-            movieFromDB={movieFromDB}
             movieComments={movieComments}
           />
         </div>
